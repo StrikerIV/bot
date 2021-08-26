@@ -1,3 +1,12 @@
 {
-    "token": "NDY1NTY4NjAzOTgzNTc3MDg5.W0JIjQ.cSSiux--IliugO5XAe0cVkFeWZ4"
+    "DeveloperModeEnabled": false,
+    "DeveloperModeServers": [],
+    "EmbedColors": {
+        "red": "#d73b3e",
+        "static": "1e90ff",
+        "green": "adff2f"
+    },
+    "token": "",
+    "apiToken": "",
+    "baseUrl": ""
 }

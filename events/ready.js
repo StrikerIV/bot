@@ -1,5 +1,5 @@
-exports.ready = async (client, message, args) => {
+exports.Ready = async () => {
 
-    console.log("Ready.")
+    console.log("Ready.");
 
 }

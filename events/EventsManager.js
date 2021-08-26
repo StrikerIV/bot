@@ -1,3 +1,5 @@
+const { parse } = require("path");
+const glob = require("glob");
 const fs = require('fs');
 
 class EventsManager {
@@ -5,17 +7,17 @@ class EventsManager {
         let eventExports = {}
 
         return new Promise((result) => {
-            fs.readdir(__dirname, function (err, events) {
-                events.forEach(function (event) {
-                    if (event === 'EventsManager.js') return;
-                    let eventFile = require(`./${event}`);
-                    let eventExport = eventFile[Object.keys(eventFile)[0]];
-                    eventExports[Object.keys(eventFile)[0]] = eventExport;
-                    result(eventExports);
+            glob(__dirname + "/**/*.js", (_, events) => {
+                events.forEach(eventFilePath => {
+                    const { name } = parse(eventFilePath);
+                    if (name === 'EventsManager') return;
+                    let requireEvent = require(eventFilePath);
+                    let eventExport = requireEvent[Object.keys(requireEvent)[0]];
+                    eventExports[Object.keys(requireEvent)[0]] = eventExport;
                 });
+                result(eventExports);
             });
         });
-
     }
 }
 

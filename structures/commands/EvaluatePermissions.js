@@ -1,0 +1,39 @@
+/**
+ * Function to check for valid permissions
+ * @param {array} users The users to check permissions for
+ * @param {array} permissions The permission flags for users to check
+ */
+
+class CommandPermissions {
+    constructor(data) {
+        this.forbidden = data.forbidden,
+        this.reason = data.reason
+    }
+}
+
+module.exports = (message, permissions, parameters) => {
+
+    let authorPermissions = permissions.author
+    let clientPermissions = permissions.client
+
+    let author = message.member
+    let client = message.guild.me
+
+    // evaluate author permissions
+    authorPermissions.forEach(permission => {
+        if(!author.permissions.has(permission, true)) {
+            return new CommandPermissions({ forbidden: true, reason: "AUTHOR" })
+        }
+    })
+     // evaluate bot permissions
+    clientPermissions.forEach(permission => {
+        if(!client.permissions.has(permission, true)) {
+            return new CommandPermissions({ forbidden: true, reason: "CLIENT" })
+        }
+    })  
+
+    //check if manageable by bot
+    if(!client.manageable)
+    return new CommandPermissions({ forbidden: false })
+
+}
